@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: #f0f4f9;
+  --surface: #ffffff;
+  --ink: #1f1f1f;
+  --accent: #1a73e8;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-canvas text-ink antialiased;
+}
+
+::selection {
+  background: rgba(26, 115, 232, 0.18);
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-2 text-sm font-medium text-white transition hover:bg-accent-soft focus:outline-none focus:ring-2 focus:ring-accent/30 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line-strong bg-surface px-5 py-2 text-sm font-medium text-ink transition hover:bg-studio focus:outline-none focus:ring-2 focus:ring-accent/15 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-muted transition hover:bg-studio hover:text-ink disabled:opacity-50;
+  }
+
+  .input-field {
+    @apply w-full rounded-2xl border border-line-strong bg-surface px-4 py-3 text-sm text-ink placeholder:text-muted/80 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20;
+  }
+
+  .panel-column {
+    @apply flex h-full flex-col border-line-strong bg-surface;
+  }
+
+  .panel-header {
+    @apply shrink-0 border-b border-line px-4 py-3.5;
+  }
+
+  .panel-title {
+    @apply text-sm font-medium text-ink;
+  }
+
+  .panel-subtitle {
+    @apply mt-0.5 text-xs text-muted;
+  }
+
+  .source-chip {
+    @apply flex items-center gap-2.5 rounded-xl border border-line bg-studio px-3 py-2.5 text-sm transition hover:border-line-strong hover:bg-white;
+  }
+
+  .studio-card {
+    @apply flex w-full flex-col items-start gap-2 rounded-2xl border border-line bg-surface p-4 text-left transition hover:border-accent/30 hover:shadow-soft;
+  }
+
+  .suggestion-chip {
+    @apply rounded-full border border-line-strong bg-surface px-4 py-2 text-sm text-ink transition hover:border-accent/40 hover:bg-accent-muted/50;
+  }
+
+  .flip-card {
+    perspective: 1200px;
+    width: 100%;
+  }
+
+  .flip-card-inner {
+    display: grid;
+    grid-template: 1fr / 1fr;
+    width: 100%;
+    transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-face {
+    grid-area: 1 / 1;
+    width: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+  }
+
+  .quiz-modal-footer {
+    @apply shrink-0 border-t border-line bg-surface px-5 py-4;
+  }
+
+  .quiz-nav-btn {
+    @apply inline-flex h-11 w-11 items-center justify-center rounded-full border border-line-strong bg-surface text-ink transition hover:bg-studio disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .quiz-flip-btn {
+    @apply inline-flex min-w-[140px] flex-1 items-center justify-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-accent-soft disabled:cursor-not-allowed disabled:bg-line disabled:text-muted disabled:shadow-none;
+  }
+
+  .chat-prose > *:first-child {
+    margin-top: 0;
+  }
+
+  .chat-prose > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .chat-list-ul {
+    @apply mb-3 ml-0 list-none space-y-2 last:mb-0;
+  }
+
+  .chat-list-ol {
+    @apply mb-3 list-decimal space-y-2 pl-5 last:mb-0;
+  }
+
+  .chat-list-ul .chat-list-item {
+    @apply relative pl-4 leading-relaxed text-ink/90;
+  }
+
+  .chat-list-ul .chat-list-item::before {
+    content: "";
+    @apply absolute left-0 top-[0.6em] h-1.5 w-1.5 rounded-full bg-accent;
+  }
+
+  .chat-list-ol .chat-list-item {
+    @apply pl-1 leading-relaxed text-ink/90;
+  }
+}
