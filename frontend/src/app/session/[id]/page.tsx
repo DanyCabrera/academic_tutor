@@ -64,7 +64,7 @@ export default function SessionPage() {
       onDelete={() => router.push("/")}
     >
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
-        <aside className="panel-column max-h-[38vh] w-full shrink-0 border-b lg:max-h-none lg:w-[300px] lg:border-b-0 lg:border-r">
+        <aside className="panel-column order-2 max-h-[30vh] w-full shrink-0 border-b lg:order-1 lg:max-h-none lg:w-[280px] lg:border-b-0 lg:border-r xl:w-[300px]">
           <SourcesPanel
             sessionId={sessionId}
             materials={materials}
@@ -72,16 +72,18 @@ export default function SessionPage() {
           />
         </aside>
 
-        <section className="flex min-h-0 min-w-0 flex-1 flex-col bg-canvas">
-          <ChatPanel
-            sessionId={sessionId}
-            initialMessages={messages}
-            onMessagesChange={refresh}
-            hasSources={materials.length > 0}
-          />
+        <section className="order-1 flex min-h-0 min-w-0 flex-1 flex-col lg:order-2 lg:min-h-0">
+          <div className="flex h-full min-h-0 flex-col">
+            <ChatPanel
+              sessionId={sessionId}
+              initialMessages={messages}
+              onMessagesChange={refresh}
+              hasSources={materials.length > 0}
+            />
+          </div>
         </section>
 
-        <aside className="panel-column max-h-[42vh] w-full shrink-0 border-t lg:max-h-none lg:w-[320px] lg:border-l">
+        <aside className="panel-column order-3 max-h-[26vh] w-full shrink-0 border-t lg:order-3 lg:max-h-none lg:w-[300px] lg:border-t-0 lg:border-l xl:w-[320px]">
           <StudioPanel sessionId={sessionId} />
         </aside>
       </div>

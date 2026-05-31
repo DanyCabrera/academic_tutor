@@ -31,10 +31,13 @@ export function ChatPanel({
   const [loading, setLoading] = useState(false);
   const [contextPreview, setContextPreview] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMessages(initialMessages);
-  }, [initialMessages]);
+    if (!loading) {
+      setMessages(initialMessages);
+    }
+  }, [initialMessages, loading]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -69,35 +72,46 @@ export function ChatPanel({
     }
   }
 
+  const canSend = input.trim().length > 0 && !loading;
+
   return (
-    <div className="flex h-full flex-col">
-      <div className="panel-header flex items-center gap-2 bg-surface/80">
-        <Sparkles className="h-4 w-4 text-accent" />
-        <div>
+    <div className="chat-shell">
+      <div className="panel-header gap-3 bg-surface/90">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-muted">
+          <Sparkles className="h-4 w-4 text-accent" aria-hidden />
+        </div>
+        <div className="min-w-0">
           <h2 className="panel-title">Chat</h2>
-          <p className="panel-subtitle">Pregunta sobre tus fuentes indexadas</p>
+          <p className="panel-subtitle">
+            {hasSources
+              ? "Respuestas basadas en tus fuentes"
+              : "Añade material en Fuentes para empezar"}
+          </p>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-6 md:px-8">
-        <div className="mx-auto max-w-3xl space-y-6">
+      <div
+        ref={scrollRef}
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
+      >
+        <div className="chat-thread">
           {messages.length === 0 && (
-            <div className="flex flex-col items-center py-8 text-center md:py-16">
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-muted">
-                <Sparkles className="h-7 w-7 text-accent" />
+            <div className="flex flex-col items-center py-10 text-center sm:py-14">
+              <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-muted">
+                <Sparkles className="h-8 w-8 text-accent" aria-hidden />
               </div>
-              <h3 className="text-lg font-normal text-ink">
+              <h3 className="text-lg font-medium tracking-tight text-ink">
                 {hasSources
                   ? "Pregunta sobre tu cuaderno"
-                  : "Añade fuentes para empezar"}
+                  : "Tu tutor te espera"}
               </h3>
-              <p className="mt-2 max-w-md text-sm text-muted">
+              <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
                 {hasSources
-                  ? "El tutor responde usando el contenido que subiste. Prueba una sugerencia:"
-                  : "Sube documentos o audio en el panel Fuentes. Luego podrás chatear aquí."}
+                  ? "El tutor usa solo el contenido que subiste. Prueba una sugerencia:"
+                  : "Sube documentos o audio en el panel Fuentes. Después podrás chatear aquí."}
               </p>
               {hasSources && (
-                <div className="mt-8 flex flex-wrap justify-center gap-2">
+                <div className="mt-8 flex w-full max-w-md flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center">
                   {SUGGESTIONS.map((s) => (
                     <button
                       key={s}
@@ -118,19 +132,21 @@ export function ChatPanel({
             <div
               key={msg.id}
               className={
-                msg.role === "user" ? "flex justify-end" : "flex justify-start"
+                msg.role === "user"
+                  ? "flex justify-end gap-0"
+                  : "flex items-start gap-3"
               }
             >
               {msg.role === "assistant" && (
-                <div className="mr-3 mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent-muted text-accent">
+                <div className="chat-avatar" aria-hidden>
                   <Sparkles className="h-4 w-4" />
                 </div>
               )}
               <div
                 className={
                   msg.role === "user"
-                    ? "max-w-[85%] rounded-3xl rounded-br-md bg-accent px-5 py-3 text-sm text-white"
-                    : "max-w-[90%] rounded-3xl rounded-bl-md border border-line bg-surface px-5 py-4 text-sm shadow-soft"
+                    ? "chat-bubble-user"
+                    : "chat-bubble-assistant"
                 }
               >
                 <MessageContent
@@ -142,54 +158,64 @@ export function ChatPanel({
           ))}
 
           {loading && (
-            <div className="flex justify-start">
-              <div className="mr-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent-muted">
+            <div className="flex items-start gap-3">
+              <div className="chat-avatar" aria-hidden>
                 <Sparkles className="h-4 w-4 animate-pulse text-accent" />
               </div>
-              <div className="rounded-3xl border border-line bg-surface px-5 py-3 text-sm text-muted">
-                El tutor está elaborando la respuesta…
+              <div className="chat-bubble-loading">
+                <span className="sr-only">Generando respuesta</span>
+                <span className="inline-flex items-center gap-2 text-muted">
+                  Elaborando respuesta
+                  <span className="typing-dots" aria-hidden>
+                    <span />
+                    <span />
+                    <span />
+                  </span>
+                </span>
               </div>
             </div>
           )}
-          <div ref={bottomRef} />
+          <div ref={bottomRef} className="h-px shrink-0" aria-hidden />
         </div>
       </div>
 
       {contextPreview && (
-        <details className="mx-4 mb-2 rounded-xl border border-line bg-surface text-xs md:mx-8">
-          <summary className="cursor-pointer px-4 py-2.5 font-medium text-muted">
+        <details className="chat-rag-details">
+          <summary className="cursor-pointer px-4 py-2.5 font-medium text-muted transition hover:text-ink">
             Citas del contexto (RAG)
           </summary>
-          <pre className="max-h-28 overflow-auto whitespace-pre-wrap px-4 pb-3 text-muted">
+          <pre className="max-h-28 overflow-auto whitespace-pre-wrap border-t border-line px-4 py-3 text-[11px] leading-relaxed text-muted">
             {contextPreview}
           </pre>
         </details>
       )}
 
       <form
-        className="shrink-0 border-t border-line-strong bg-surface px-4 py-4 md:px-8"
+        className="chat-composer-bar"
         onSubmit={(e) => {
           e.preventDefault();
           send();
         }}
       >
-        <div className="mx-auto flex max-w-3xl gap-2">
+        <div className="chat-composer-inner">
           <input
-            className="input-field flex-1 !rounded-full"
+            className="chat-composer-input"
             placeholder={
               hasSources
-                ? "Pregunta sobre tus fuentes…"
+                ? "Escribe tu pregunta…"
                 : "Añade fuentes para chatear…"
             }
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={loading}
+            maxLength={8000}
+            aria-label="Mensaje para el tutor"
           />
           <button
             type="submit"
-            className="btn-primary !h-12 !w-12 shrink-0 !rounded-full !p-0"
-            disabled={loading || !input.trim()}
-            aria-label="Enviar"
+            className="chat-composer-send"
+            disabled={!canSend}
+            aria-label="Enviar mensaje"
           >
             <Send className="h-4 w-4" />
           </button>

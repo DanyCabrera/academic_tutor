@@ -32,7 +32,7 @@ export function StudioPanel({ sessionId }: Props) {
             </div>
           </div>
           <div className="studio-card cursor-default opacity-55">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-100 text-violet-700">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-soft text-violet-ink">
               <Layers className="h-4 w-4" />
             </div>
             <div>
@@ -48,7 +48,7 @@ export function StudioPanel({ sessionId }: Props) {
 
         <div className="rounded-2xl border border-accent/20 bg-accent-muted/30 p-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-white">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-surface">
               <HelpCircle className="h-5 w-5" />
             </div>
             <div>

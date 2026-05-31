@@ -150,7 +150,7 @@ export function NotebookMenu({
 
             <button
               type="button"
-              className="flex w-full items-center gap-2.5 px-4 py-3 text-sm text-danger transition hover:bg-red-50"
+              className="flex w-full items-center gap-2.5 px-4 py-3 text-sm text-danger transition hover:bg-[#f5eded]"
               onClick={() => {
                 setOpen(false);
                 setConfirmDelete(true);
@@ -170,13 +170,12 @@ export function NotebookMenu({
         ref={btnRef}
         type="button"
         className={clsx(
-          "relative z-20 inline-flex items-center justify-center rounded-full text-muted transition hover:bg-white/70 hover:text-ink",
+          "relative z-20 inline-flex items-center justify-center rounded-full text-muted transition hover:bg-surface/90 hover:text-ink",
           variant === "card"
-            ? "pointer-events-auto h-8 w-8 bg-white/50 backdrop-blur-sm"
+            ? "h-8 w-8 bg-surface/75"
             : "btn-ghost h-9 w-9"
         )}
         onClick={(e) => {
-          e.preventDefault();
           e.stopPropagation();
           toggleMenu();
         }}

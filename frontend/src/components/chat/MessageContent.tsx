@@ -19,17 +19,17 @@ export function MessageContent({ content, variant }: Props) {
       className="chat-prose"
       components={{
         h2: ({ children }) => (
-          <h2 className="mb-2 mt-4 first:mt-0 text-[15px] font-medium text-ink">
+          <h2 className="mb-2 mt-4 first:mt-0 text-[15px] font-medium tracking-tight text-ink">
             {children}
           </h2>
         ),
         h3: ({ children }) => (
-          <h3 className="mb-1.5 mt-3 first:mt-0 text-sm font-semibold text-ink">
+          <h3 className="mb-1.5 mt-3 first:mt-0 text-sm font-medium text-ink">
             {children}
           </h3>
         ),
         p: ({ children }) => (
-          <p className="mb-2.5 last:mb-0 leading-relaxed text-ink/90">
+          <p className="mb-2.5 last:mb-0 leading-[1.65] text-ink/88">
             {children}
           </p>
         ),

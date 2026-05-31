@@ -62,10 +62,10 @@ export default function HomePage() {
     <NotebookShell>
       <main className="flex-1 overflow-y-auto">
         <div className="relative mx-auto max-w-6xl px-6 py-12">
-          <div className="pointer-events-none absolute inset-x-6 top-0 h-48 rounded-[2rem] bg-gradient-to-b from-accent-muted/40 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-6 top-0 h-48 rounded-[2rem] bg-gradient-to-b from-accent-muted/90 to-transparent" />
 
           <header className="relative mb-12">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent-soft">
               Academic Tutor
             </p>
             <h2 className="mt-2 text-3xl font-light tracking-tight text-ink sm:text-4xl">
@@ -78,9 +78,9 @@ export default function HomePage() {
               type="button"
               onClick={handleNewSession}
               disabled={creating}
-              className="group flex min-h-[190px] flex-col items-center justify-center gap-4 rounded-[1.35rem] border-2 border-dashed border-line-strong bg-surface/80 p-6 text-center backdrop-blur-sm transition hover:border-accent hover:bg-accent-muted/20 disabled:opacity-60"
+              className="group flex min-h-[190px] flex-col items-center justify-center gap-4 rounded-[1.35rem] border-2 border-dashed border-line-strong bg-surface p-6 text-center transition hover:border-accent/50 hover:bg-accent-muted/50 disabled:opacity-60"
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-muted text-accent shadow-soft transition group-hover:scale-105 group-hover:bg-accent group-hover:text-white">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-muted text-accent transition group-hover:bg-accent group-hover:text-surface">
                 <Plus className="h-7 w-7" />
               </div>
               <div>

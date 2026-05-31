@@ -32,7 +32,7 @@ export function NotebookTopBar({
   const theme = getNotebookTheme(color);
 
   return (
-    <header className="flex h-14 shrink-0 items-center gap-3 border-b border-line-strong bg-surface/95 px-4 backdrop-blur-sm">
+    <header className="flex h-panel-header shrink-0 items-center gap-3 border-b border-line bg-surface px-4">
       {backHref ? (
         <Link
           href={backHref}
@@ -59,7 +59,7 @@ export function NotebookTopBar({
               className={clsx("h-2.5 w-2.5 shrink-0 rounded-full", theme.dot)}
               aria-hidden
             />
-            <div className="min-w-0 flex-1">
+            <div className="group/titlebar min-w-0 flex-1">
               {canEdit ? (
                 <EditableNotebookTitle
                   sessionId={sessionId!}

@@ -3,10 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --canvas: #f0f4f9;
-  --surface: #ffffff;
-  --ink: #1f1f1f;
-  --accent: #1a73e8;
+  --canvas: #ebe9e4;
+  --surface: #f6f5f2;
+  --ink: #3a3935;
+  --accent: #6d7b8a;
+  --accent-soft: #84919e;
+  --line: #ddd9d2;
 }
 
 html,
@@ -19,52 +21,101 @@ body {
 }
 
 ::selection {
-  background: rgba(26, 115, 232, 0.18);
+  background: rgba(109, 123, 138, 0.22);
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-2 text-sm font-medium text-white transition hover:bg-accent-soft focus:outline-none focus:ring-2 focus:ring-accent/30 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex h-10 items-center justify-center gap-2 rounded-full bg-accent px-5 text-sm font-medium text-surface transition hover:bg-accent-soft focus:outline-none focus:ring-2 focus:ring-accent/20 focus:ring-offset-2 focus:ring-offset-canvas disabled:cursor-not-allowed disabled:opacity-45;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line-strong bg-surface px-5 py-2 text-sm font-medium text-ink transition hover:bg-studio focus:outline-none focus:ring-2 focus:ring-accent/15 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex h-10 items-center justify-center gap-2 rounded-full border border-line-strong bg-surface px-5 text-sm font-medium text-ink transition hover:border-accent/25 hover:bg-accent-muted/40 focus:outline-none focus:ring-2 focus:ring-accent/15 disabled:cursor-not-allowed disabled:opacity-45;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-muted transition hover:bg-studio hover:text-ink disabled:opacity-50;
+    @apply inline-flex h-10 items-center justify-center gap-2 rounded-full px-3 text-sm font-medium text-muted transition hover:bg-studio hover:text-ink disabled:opacity-45;
+  }
+
+  .btn-icon {
+    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition disabled:cursor-not-allowed disabled:opacity-45;
   }
 
   .input-field {
-    @apply w-full rounded-2xl border border-line-strong bg-surface px-4 py-3 text-sm text-ink placeholder:text-muted/80 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20;
+    @apply h-11 w-full rounded-2xl border border-line-strong bg-surface px-4 text-sm text-ink placeholder:text-muted/70 focus:border-accent/50 focus:outline-none focus:ring-2 focus:ring-accent/15;
   }
 
   .panel-column {
-    @apply flex h-full flex-col border-line-strong bg-surface;
+    @apply flex h-full min-h-0 flex-col border-line-strong bg-surface;
   }
 
   .panel-header {
-    @apply shrink-0 border-b border-line px-4 py-3.5;
+    @apply flex h-panel-header shrink-0 items-center border-b border-line px-4;
   }
 
   .panel-title {
-    @apply text-sm font-medium text-ink;
+    @apply text-sm font-medium leading-tight text-ink;
   }
 
   .panel-subtitle {
-    @apply mt-0.5 text-xs text-muted;
+    @apply mt-0.5 text-xs leading-snug text-muted;
   }
 
   .source-chip {
-    @apply flex items-center gap-2.5 rounded-xl border border-line bg-studio px-3 py-2.5 text-sm transition hover:border-line-strong hover:bg-white;
+    @apply flex items-center gap-2.5 rounded-xl border border-line bg-studio px-3 py-2.5 text-sm transition hover:border-line-strong hover:bg-surface hover:shadow-soft;
   }
 
   .studio-card {
-    @apply flex w-full flex-col items-start gap-2 rounded-2xl border border-line bg-surface p-4 text-left transition hover:border-accent/30 hover:shadow-soft;
+    @apply flex w-full flex-col items-start gap-2 rounded-2xl border border-line bg-surface p-4 text-left transition hover:border-accent/25 hover:shadow-soft;
   }
 
   .suggestion-chip {
-    @apply rounded-full border border-line-strong bg-surface px-4 py-2 text-sm text-ink transition hover:border-accent/40 hover:bg-accent-muted/50;
+    @apply inline-flex max-w-full items-center rounded-full border border-line-strong bg-surface px-4 py-2.5 text-left text-sm leading-snug text-ink transition hover:border-accent/30 hover:bg-accent-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/20 disabled:opacity-50;
+  }
+
+  /* —— Chat layout (alturas fijas) —— */
+  .chat-shell {
+    @apply flex h-full min-h-0 flex-col bg-canvas;
+  }
+
+  .chat-thread {
+    @apply mx-auto w-full max-w-chat flex-1 space-y-5 px-4 py-5 sm:px-6 sm:py-6;
+  }
+
+  .chat-avatar {
+    @apply mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-muted text-accent;
+  }
+
+  .chat-bubble-user {
+    @apply max-w-[min(100%,20rem)] rounded-chat rounded-br-md bg-accent px-4 py-3 text-sm leading-relaxed text-surface;
+  }
+
+  .chat-bubble-assistant {
+    @apply max-w-[min(100%,36rem)] rounded-chat rounded-bl-md border border-line bg-surface px-4 py-3.5 text-sm shadow-soft;
+  }
+
+  .chat-bubble-loading {
+    @apply max-w-[min(100%,20rem)] rounded-chat rounded-bl-md border border-line bg-surface px-4 py-3 text-sm text-muted;
+  }
+
+  .chat-composer-bar {
+    @apply shrink-0 border-t border-line bg-surface/95 px-4 py-3 shadow-composer backdrop-blur-sm sm:px-6;
+  }
+
+  .chat-composer-inner {
+    @apply mx-auto flex h-11 w-full max-w-chat items-center gap-2;
+  }
+
+  .chat-composer-input {
+    @apply h-11 min-w-0 flex-1 rounded-full border border-line-strong bg-studio/80 px-4 text-sm text-ink placeholder:text-muted/70 focus:border-accent/40 focus:bg-surface focus:outline-none focus:ring-2 focus:ring-accent/15 disabled:opacity-60;
+  }
+
+  .chat-composer-send {
+    @apply btn-icon h-11 w-11 bg-accent text-surface hover:bg-accent-soft focus:ring-2 focus:ring-accent/20 focus:ring-offset-2 focus:ring-offset-canvas;
+  }
+
+  .chat-rag-details {
+    @apply mx-auto mb-2 w-full max-w-chat rounded-xl border border-line bg-surface/90 text-xs;
   }
 
   .flip-card {
@@ -100,11 +151,11 @@ body {
   }
 
   .quiz-nav-btn {
-    @apply inline-flex h-11 w-11 items-center justify-center rounded-full border border-line-strong bg-surface text-ink transition hover:bg-studio disabled:cursor-not-allowed disabled:opacity-40;
+    @apply btn-icon border border-line-strong bg-surface text-ink hover:bg-studio;
   }
 
   .quiz-flip-btn {
-    @apply inline-flex min-w-[140px] flex-1 items-center justify-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-accent-soft disabled:cursor-not-allowed disabled:bg-line disabled:text-muted disabled:shadow-none;
+    @apply inline-flex h-11 min-w-[140px] flex-1 items-center justify-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-surface transition hover:bg-accent-soft disabled:cursor-not-allowed disabled:bg-line disabled:text-muted disabled:shadow-none;
   }
 
   .chat-prose > *:first-child {
@@ -129,10 +180,36 @@ body {
 
   .chat-list-ul .chat-list-item::before {
     content: "";
-    @apply absolute left-0 top-[0.6em] h-1.5 w-1.5 rounded-full bg-accent;
+    @apply absolute left-0 top-[0.65em] h-1.5 w-1.5 rounded-full bg-accent-soft;
   }
 
   .chat-list-ol .chat-list-item {
     @apply pl-1 leading-relaxed text-ink/90;
+  }
+
+  .typing-dots span {
+    @apply mx-0.5 inline-block h-1.5 w-1.5 rounded-full bg-accent/50;
+    animation: typing-bounce 1.2s ease-in-out infinite;
+  }
+
+  .typing-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .typing-dots span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+}
+
+@keyframes typing-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
   }
 }

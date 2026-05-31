@@ -76,12 +76,12 @@ export function SourcesPanel({ sessionId, materials, onRefresh }: Props) {
         </div>
         <button
           type="button"
-          className="btn-ghost !px-2.5 !py-1.5 text-accent"
+          className="btn-ghost h-9 gap-1.5 px-3 text-accent hover:bg-accent-muted/60 hover:text-accent-deep"
           onClick={() => setShowAdd((v) => !v)}
           aria-expanded={showAdd}
         >
           <Plus className="h-4 w-4" />
-          <span className="sr-only sm:not-sr-only sm:inline">Añadir</span>
+          <span className="hidden sm:inline">Añadir</span>
         </button>
       </div>
 
@@ -113,7 +113,7 @@ export function SourcesPanel({ sessionId, materials, onRefresh }: Props) {
 
             <button
               type="button"
-              className="btn-secondary w-full !rounded-xl"
+              className="btn-secondary h-11 w-full rounded-xl"
               disabled={loading}
               onClick={() => fileRef.current?.click()}
             >
@@ -122,7 +122,7 @@ export function SourcesPanel({ sessionId, materials, onRefresh }: Props) {
             </button>
             <button
               type="button"
-              className="btn-secondary w-full !rounded-xl"
+              className="btn-secondary h-11 w-full rounded-xl"
               disabled={loading}
               onClick={() => audioRef.current?.click()}
             >
@@ -156,7 +156,7 @@ export function SourcesPanel({ sessionId, materials, onRefresh }: Props) {
         )}
 
         {error && (
-          <p className="mx-4 mt-3 rounded-xl border border-danger/20 bg-red-50 px-3 py-2 text-xs text-danger">
+          <p className="mx-4 mt-3 rounded-xl border border-danger/25 bg-[#f5eded] px-3 py-2 text-xs text-danger">
             {error}
           </p>
         )}
@@ -189,7 +189,7 @@ export function SourcesPanel({ sessionId, materials, onRefresh }: Props) {
                         className={clsx(
                           "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg",
                           m.kind === "transcription"
-                            ? "bg-violet-100 text-violet-700"
+                            ? "bg-violet-soft text-violet-ink"
                             : "bg-accent-muted text-accent"
                         )}
                       >
